@@ -124,7 +124,9 @@ pair <- getBM(attributes=c("ensembl_gene_id","external_gene_name"), filters="ens
 
 # changing the column headers of pair to "ensgene" and "symbol"
 names(pair) <- c("ensgene","symbol")
-#merging the two objects sig_res and pair using the merge command
-final <- merge(sig_res, pair, by="ensgene")
 
+## Merging the two objects sig_res and pair using the merge command
+```
+final <- merge(sig_res, pair, by="ensgene")
+```
 
