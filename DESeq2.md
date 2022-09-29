@@ -1,4 +1,4 @@
-# Loading the required libraries
+### Loading the required libraries
 
 First load all the libraries that will be needed for the processing and analysis of data.
 ```
@@ -13,7 +13,7 @@ library(RColorBrewer)
 library(biomaRt)
 library(data.table)
 ```
-# Load the countdata
+### Load the countdata
 
 Upon executing the first line of the code block below, you will select the file from your system that contains the raw count data. 
 ```
@@ -21,30 +21,29 @@ Data <- read.table(file.choose(), header=TRUE, sep="\t")
 head(Data)
 View(Data)
 ```
-# Removing extra Geneid columns
+### Removing extra Geneid columns
 ```
 Data <- Data[,-c(3,5,7,9,11,13)]
 ```
-# Renaming the column names that are more friendly
+### Renaming the column names that are more friendly
 ```
 names(Data) <- c("ensgene","C1","C2","C3","EL1","EL2","EL3","EL4")
 ```
 
-# Add rownames to the data, which will actually be the ensgene column
+### Add rownames to the data, which will actually be the ensgene column
 ```
 rownames(Data) <- Data$ensgene
 ```
-# Removal of ensgene columns since rownames have been included in the previous step
+### Removal of ensgene columns since rownames have been included in the previous step
 ```
 Data <- Data[, -1]
 ```
-# Display summary of the data
+### Display summary of the data
 ```
-#in each column
 summary(Data)
 ```
 
-# Determining total reads in each of the samples and visualizing them as barplots
+### Determining total reads in each of the samples and visualizing them as barplots
 ```
 colSums(Data)
 barplot(colSums(Data), las=3)
