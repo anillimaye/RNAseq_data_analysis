@@ -1,16 +1,27 @@
-#loading the required libraries
+# Loading the required libraries
+
 library(DESeq2)
+
 library(dplyr)
+
 library(ggplot2)
+
 library(gplots)
+
 library(annotables)
+
 library(tidyverse)
+
 library(pheatmap)
+
 library(RColorBrewer)
+
 library(biomaRt)
+
 library(data.table)
 
-#Load the countdata
+
+# Load the countdata
 
 Data <- read.table(file.choose(), header=TRUE, sep="\t")
 head(Data)
