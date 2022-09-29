@@ -1,4 +1,6 @@
 # Loading the required libraries
+
+First load all the libraries that will be needed for the processing and analysis of data.
 ```
 library(DESeq2)
 library(dplyr)
@@ -17,9 +19,10 @@ Data <- read.table(file.choose(), header=TRUE, sep="\t")
 head(Data)
 View(Data)
 ```
-#removing extra Geneid columns
+# Removing extra Geneid columns
+```
 Data <- Data[,-c(3,5,7,9,11,13)]
-
+```
 #renaming the column names that are more friendly
 names(Data) <- c("ensgene","C1","C2","C3","EL1","EL2","EL3","EL4")
 
