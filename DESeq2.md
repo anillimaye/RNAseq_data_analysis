@@ -25,33 +25,41 @@ View(Data)
 ```
 Data <- Data[,-c(3,5,7,9,11,13)]
 ```
-#renaming the column names that are more friendly
+# Renaming the column names that are more friendly
+```
 names(Data) <- c("ensgene","C1","C2","C3","EL1","EL2","EL3","EL4")
+```
 
-#now we will add rownames to the data, which will actually be the ensgene column
+# Add rownames to the data, which will actually be the ensgene column
+```
 rownames(Data) <- Data$ensgene
-
-#Now we dont want the ensgene column
+```
+# Removal of ensgene columns since rownames have been included in the previous step
+```
 Data <- Data[, -1]
-
-#We will see summary of the data which shows that large number of entries are zeros
+```
+# Display summary of the data
+```
 #in each column
 summary(Data)
+```
 
-#One can see how many total reads are there in each sample
-#and visualize them as bar plots
+# Determining total reads in each of the samples and visualizing them as barplots
+```
 colSums(Data)
 barplot(colSums(Data), las=3)
-
-#We look at the distribution of counts in each column(sample)
+```
+# To check the distribution of counts for each sample
 hist(Data$C1, breaks=100)
 
-#log2 transformation of the data
+# log2 transformation of the data
+```
 logData <- log2(1+Data)
-
-#Now you can see the change in the histogram
+```
+# Distribution of log transformed counts in each sample
+```
 hist(logData$C1, br=100)
-
+```
 #at this point one can look at similarity in the logcountdata in any 
 #pair of samples; for example
 
