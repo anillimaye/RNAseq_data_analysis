@@ -14,6 +14,8 @@ library(biomaRt)
 library(data.table)
 ```
 # Load the countdata
+
+Upon executing the first line of the code block below, you will select the file from your system that contains the raw count data. 
 ```
 Data <- read.table(file.choose(), header=TRUE, sep="\t")
 head(Data)
