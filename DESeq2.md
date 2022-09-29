@@ -48,30 +48,31 @@ summary(Data)
 colSums(Data)
 barplot(colSums(Data), las=3)
 ```
-# To check the distribution of counts for each sample
+### To check the distribution of counts for each sample
 hist(Data$C1, breaks=100)
 
-# log2 transformation of the data
+### log2 transformation of the data
 ```
 logData <- log2(1+Data)
 ```
-# Distribution of log transformed counts in each sample
+### Distribution of log transformed counts in each sample
 ```
 hist(logData$C1, br=100)
 ```
-#at this point one can look at similarity in the logcountdata in any 
-#pair of samples; for example
-
+### Examining a pair of samples for similarity in the logcountdata in any 
+```
 plot(logData$C1, logData$C2)
+```
 
-#We will construct the metadata of the experiment
+### Constructing the metadata
+```
 Line <- c("MCF7","MCF7","MCF7","MCF7","MCF7","MCF7","MCF7")
 Treatment <- c("Control", "Control", "Control", "Enternolactone", "Enternolactone", "Enternolactone", "Enternolactone")
 Time <- c("24", "24", "24", "24", "24", "24", "24")
 Sample <- names(Data)
 
 colData <- as.data.frame(cbind(Sample, Time, Line, Treatment))
-
+```
 #Now we make the DESeq2 object
 dds <- DESeqDataSetFromMatrix(countData=Data, colData=colData, design= ~Treatment)
 dds <- DESeq(dds)
