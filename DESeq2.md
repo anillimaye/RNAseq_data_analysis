@@ -84,48 +84,54 @@ dim(dds)
 dds <- dds[rowSums(counts(dds))>7, ]
 dim(dds)
 ```
-#now we look at sizeFactors
+### Looking at sizeFactors
+```
 sizeFactors(dds)
-
-#regularized log transformation of the data
+```
+### Regularized log transformation of the data
+```
 rld <- rlog(dds)
-
-#PCAplot
+```
+### PCAplot
+```
 plotPCA(rld, intgroup="Treatment")
 plotPCA(rld, intgroup=c("Sample", "Treatment"))
-
-#generating a heatmap to find out how close are the samples to each other.
+```
+### Generating a heatmap to find out how close are the samples to each other.
+```
 pheatmap(cor(assay(rld)))
+```
+## This part will determine the differentially expressed genes
 
-#this part will determine the differentially expressed genes
-
-#to see how many different kinds of comparisons are possible
+### To see how many different kinds of comparisons are possible
+```
 resultsNames(dds)
 res <- results(dds)
 res <- results(dds, alpha=0.05)
 head(res)
 summary(res)
 plotMA(res, ylim=c(-8,8))
-
-#apply lfcshrink
+```
+### Apply lfcshrink
+```
 res_lfcshrink=lfcShrink(dds,contrast = c("Treatment","Enternolactone","Control"),type = 'normal',res = res)
 plotMA(res_lfcshrink, ylim=c(-8,8))
-
-#subsetting the lfcshrinked results to keep only those genes where padj < 0.05
+```
+### Subsetting the lfcshrinked results to keep only those genes where padj < 0.05
+```
 res_lfcshrink_sig=subset(res_lfcshrink,padj<0.05)
-
-#saving the lfcshrinked results into a new object name
 sig_res <- res_lfcshrink_sig
-
-#getting gene symbols against the ensembl ids#first we change the rownams to column for the object sig_res
+```
+### Getting gene symbols against the ensembl ids#first we change the rownams to column for the object sig_res
+```
 sig_res <- data.frame(sig_res) %>% rownames_to_column(var="ensgene")
-#then we make a list of ensembl ids
+# then we make a list of ensembl ids
 ensembl_ids <- sig_res$ensgene
 
 listEnsembl()
 ensembl <- useEnsembl(biomart="genes")
 datasets <- listDatasets(ensembl)
-#connect ensembl
+# connect ensembl
 ensembl.con <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 attr <- listAttributes(ensembl.con)
 filters <- listFilters(ensembl.con)
@@ -134,12 +140,11 @@ filters <- listFilters(ensembl.con)
 ensembl.con <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 #get symbol against each ensembl id
-
 pair <- getBM(attributes=c("ensembl_gene_id","external_gene_name"), filters="ensembl_gene_id", values=ensembl_ids, mart=ensembl.con)
 
-# changing the column headers of pair to "ensgene" and "symbol"
+#changing the column headers of pair to "ensgene" and "symbol"
 names(pair) <- c("ensgene","symbol")
-
+```
 ## Merging the two objects sig_res and pair using the merge command
 ```
 final <- merge(sig_res, pair, by="ensgene")
