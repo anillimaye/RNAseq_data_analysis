@@ -73,15 +73,17 @@ Sample <- names(Data)
 
 colData <- as.data.frame(cbind(Sample, Time, Line, Treatment))
 ```
-#Now we make the DESeq2 object
+### Now we make the DESeq2 object
+```
 dds <- DESeqDataSetFromMatrix(countData=Data, colData=colData, design= ~Treatment)
 dds <- DESeq(dds)
 dim(dds)
-
-#we remove those ensgenes which have very low counts in all samples
+```
+### We remove those ensgenes which have very low counts in all samples
+```
 dds <- dds[rowSums(counts(dds))>7, ]
 dim(dds)
-
+```
 #now we look at sizeFactors
 sizeFactors(dds)
 
